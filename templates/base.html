@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Udiva{% endblock %}</title>
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/topics.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- SITE CONTENT -->
+    <div class="site-shell">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- ================= UDIVA CHATBOT ================= -->
+<div id="udiva-orb">
+  <svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      <!-- Glittery pink diamond gradient -->
+      <linearGradient id="diamondPink" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffdbe7"/>
+        <stop offset="25%" stop-color="#f2a1b8"/>
+        <stop offset="50%" stop-color="#c08497"/>
+        <stop offset="75%" stop-color="#f7c1d1"/>
+        <stop offset="100%" stop-color="#8e5f6d"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Emoji-like diamond -->
+    <g fill="url(#diamondPink)" stroke="rgba(255,255,255,0.35)" stroke-width="2">
+      <!-- top -->
+      <polygon points="50,8 72,28 28,28"/>
+      <!-- center -->
+      <polygon points="28,28 72,28 90,50 50,92 10,50"/>
+      <!-- facets -->
+      <polygon points="50,28 72,28 50,92"/>
+      <polygon points="28,28 50,28 50,92"/>
+    </g>
+  </svg>
+</div>
+
+
+
+
+
+
+    <!-- Chat Window -->
+    <div id="udiva-window">
+
+        <!-- Top Bar -->
+        <div id="udiva-top">
+            <span>Udiva</span>
+            <div class="udiva-actions">
+                <button onclick="toggleFullscreen()">⤢</button>
+                <button onclick="closeUdiva()">✕</button>
+            </div>
+        </div>
+
+        <!-- FAQ Chips -->
+        <div id="udiva-faqs">
+            <button onclick="sendFAQ('Explain variables simply')">Variables</button>
+            <button onclick="sendFAQ('Explain if else with example')">If-Else</button>
+            <button onclick="sendFAQ('What are loops used for')">Loops</button>
+            <button onclick="sendFAQ('How should I start DSA')">DSA</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="udiva-messages"></div>
+
+        <!-- Typing Indicator -->
+        <div id="udiva-typing">
+            Udiva is thinking<span class="dots"></span>
+        </div>
+
+        <!-- Input Row -->
+        <div id="udiva-input-row">
+            <input
+                type="text"
+                id="udiva-input"
+                placeholder="Ask Udiva..."
+                onkeydown="if(event.key==='Enter') sendUdivaMessage()"
+            />
+            <button id="udiva-send" onclick="sendUdivaMessage()">➤</button>
+        </div>
+
+    </div>
+
+    <!-- Chatbot Logic -->
+    <script src="{{ url_for('static', filename='js/udiva_chat.js') }}"></script>
+    <script>
+  window.udivaState = JSON.parse(
+    localStorage.getItem("udiva-state")
+  ) || {
+    lastSeen: {},
+    reading: {},
+    quizzes: {},
+    notes: {},
+    drawings: {}
+  };
+
+  function saveUdivaState() {
+    localStorage.setItem(
+      "udiva-state",
+      JSON.stringify(window.udivaState)
+    );
+  }
+</script>
+
+
+</body>
+</html>

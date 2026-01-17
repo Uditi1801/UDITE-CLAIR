@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UDITÉ CLAIR</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+
+<body class="landing">
+
+<div class="hero">
+
+    <!-- background orbs -->
+    <div class="orb orb-left"></div>
+    <div class="orb orb-right"></div>
+
+    <div class="hero-content">
+        <p class="hero-eyebrow">CODE • CLARITY • COFFEE</p>
+
+        <h1 class="hero-title">UDITÉ CLAIR</h1>
+
+        <p class="hero-subtitle">
+            Clarity, by design.
+        </p>
+
+        <div class="hero-actions"
+             style="flex-direction: column; align-items: center;">
+
+            <!-- Primary CTA -->
+            <a href="/topics" class="hero-btn">
+                Start Learning
+            </a>
+
+            <!-- subtle spacing -->
+            <div style="height: 0.9rem;"></div>
+
+            <!-- Secondary CTA -->
+            <button 
+              onclick="resumeLearning()"
+              style="
+                background: transparent;
+                border: none;
+                color: rgba(232,232,234,0.75);
+                font-size: 0.78rem;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                cursor: pointer;
+              ">
+                Resume Learning →
+            </button>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/coffee-mode.js') }}"></script>
+
+<script>
+function resumeLearning() {
+  const lastReading = localStorage.getItem("udiva-last-reading");
+  if (lastReading) {
+    try {
+      const data = JSON.parse(lastReading);
+      if (data.topic) {
+        window.location.href = `/read/${data.topic}`;
+        return;
+      }
+    } catch (e) {}
+  }
+
+  const lastTopic = localStorage.getItem("udiva-last-topic");
+  if (lastTopic) {
+    window.location.href = `/topic/${lastTopic}`;
+    return;
+  }
+
+  window.location.href = "/topics";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,496 @@
+{
+  "variables": {
+    "easy": [
+      {
+        "question": "What is a variable?",
+        "options": ["A container for storing data", "A loop", "A condition", "A function"],
+        "answer": "A container for storing data",
+        "subtopic": "definition"
+      },
+      {
+        "question": "Which symbol is used for assignment?",
+        "options": ["=", "==", "!=", ":"],
+        "answer": "=",
+        "subtopic": "assignment_operator"
+      },
+      {
+        "question": "Which data type stores text?",
+        "options": ["int", "float", "str", "bool"],
+        "answer": "str",
+        "subtopic": "data_types"
+      },
+      {
+        "question": "x = 10. What is x?",
+        "options": ["Variable", "Function", "Loop", "Class"],
+        "answer": "Variable",
+        "subtopic": "definition"
+      },
+      {
+        "question": "Which is a valid variable name?",
+        "options": ["1x", "x_1", "x-1", "x 1"],
+        "answer": "x_1",
+        "subtopic": "naming_rules"
+      }
+    ],
+    "medium": [
+      {
+        "question": "What is the type of x?\nx = 5",
+        "options": ["int", "float", "str", "bool"],
+        "answer": "int",
+        "subtopic": "data_types"
+      },
+      {
+        "question": "Which is a valid variable name?",
+        "options": ["2value", "value_2", "value-2", "value 2"],
+        "answer": "value_2",
+        "subtopic": "naming_rules"
+      },
+      {
+        "question": "What does type(x) return?",
+        "options": ["value", "datatype", "address", "name"],
+        "answer": "datatype",
+        "subtopic": "type_function"
+      },
+      {
+        "question": "x = '5'. What is the type?",
+        "options": ["int", "float", "str", "bool"],
+        "answer": "str",
+        "subtopic": "data_types"
+      },
+      {
+        "question": "Which operator assigns a value?",
+        "options": ["=", "==", "<=", "=>"],
+        "answer": "=",
+        "subtopic": "assignment_operator"
+      }
+    ],
+    "hard": [
+      {
+        "question": "What is the type of x?\nx = 5 + 3.0",
+        "options": ["int", "float", "str", "bool"],
+        "answer": "float",
+        "subtopic": "type_promotion"
+      },
+      {
+        "question": "What happens if a variable is not defined?",
+        "options": ["Runtime error", "Syntax error", "Ignored", "Converted to None"],
+        "answer": "Runtime error",
+        "subtopic": "errors"
+      },
+      {
+        "question": "Which function checks data type?",
+        "options": ["typeof()", "type()", "datatype()", "check()"],
+        "answer": "type()",
+        "subtopic": "type_function"
+      },
+      {
+        "question": "x = True. What is the type?",
+        "options": ["bool", "int", "str", "float"],
+        "answer": "bool",
+        "subtopic": "data_types"
+      },
+      {
+        "question": "Which is NOT a valid variable name?",
+        "options": ["_x", "x2", "x_value", "2x"],
+        "answer": "2x",
+        "subtopic": "naming_rules"
+      }
+    ]
+  },
+
+  "if_else": {
+    "easy": [
+      {
+        "question": "Which keyword starts a condition?",
+        "options": ["if", "else", "elif", "when"],
+        "answer": "if",
+        "subtopic": "if_basics"
+      },
+      {
+        "question": "Which keyword runs if condition is false?",
+        "options": ["if", "else", "elif", "loop"],
+        "answer": "else",
+        "subtopic": "else_block"
+      },
+      {
+        "question": "Which symbol is used for comparison?",
+        "options": ["=", "==", "+", "-"],
+        "answer": "==",
+        "subtopic": "comparison_operators"
+      },
+      {
+        "question": "Which block runs when condition is true?",
+        "options": ["if", "else", "elif", "break"],
+        "answer": "if",
+        "subtopic": "if_basics"
+      },
+      {
+        "question": "if statements are used for?",
+        "options": ["Decision making", "Looping", "Storing data", "Printing"],
+        "answer": "Decision making",
+        "subtopic": "decision_making"
+      }
+    ],
+    "medium": [
+      {
+        "question": "How many elif blocks can an if statement have?",
+        "options": ["One", "Two", "Unlimited", "None"],
+        "answer": "Unlimited",
+        "subtopic": "elif_usage"
+      },
+      {
+        "question": "What happens if no condition is true?",
+        "options": ["else runs", "error", "program stops", "ignored"],
+        "answer": "else runs",
+        "subtopic": "else_block"
+      },
+      {
+        "question": "Which operator checks inequality?",
+        "options": ["!=", "==", "=", "<="],
+        "answer": "!=",
+        "subtopic": "comparison_operators"
+      },
+      {
+        "question": "Which comparison checks greater than?",
+        "options": [">", "<", "==", "!="],
+        "answer": ">",
+        "subtopic": "comparison_operators"
+      },
+      {
+        "question": "elif stands for?",
+        "options": ["else if", "end if", "else loop", "error if"],
+        "answer": "else if",
+        "subtopic": "elif_usage"
+      }
+    ],
+    "hard": [
+      {
+        "question": "What is output?\nx=5\nif x>10:\n print('A')\nelse:\n print('B')",
+        "options": ["A", "B", "Error", "Nothing"],
+        "answer": "B",
+        "subtopic": "condition_evaluation"
+      },
+      {
+        "question": "Nested if means?",
+        "options": ["if inside if", "loop inside if", "if after else", "error"],
+        "answer": "if inside if",
+        "subtopic": "nested_if"
+      },
+      {
+        "question": "Which operator checks both conditions?",
+        "options": ["and", "or", "not", "xor"],
+        "answer": "and",
+        "subtopic": "logical_operators"
+      },
+      {
+        "question": "Which operator checks either condition?",
+        "options": ["or", "and", "not", "=="],
+        "answer": "or",
+        "subtopic": "logical_operators"
+      },
+      {
+        "question": "What does 'not' do?",
+        "options": ["Negates condition", "Adds condition", "Ends if", "Skips if"],
+        "answer": "Negates condition",
+        "subtopic": "logical_operators"
+      }
+    ]
+  },
+
+  "arrays": {
+    "easy": [
+      {
+        "question": "Which data structure stores multiple values?",
+        "options": ["List", "int", "float", "bool"],
+        "answer": "List",
+        "subtopic": "array_basics"
+      },
+      {
+        "question": "Which brackets define a list?",
+        "options": ["[]", "()", "{}", "<>"],
+        "answer": "[]",
+        "subtopic": "syntax"
+      },
+      {
+        "question": "Indexing in lists starts from?",
+        "options": ["0", "1", "-1", "Any"],
+        "answer": "0",
+        "subtopic": "indexing"
+      },
+      {
+        "question": "Which function finds length of list?",
+        "options": ["len()", "size()", "count()", "length()"],
+        "answer": "len()",
+        "subtopic": "built_in_functions"
+      },
+      {
+        "question": "Lists are?",
+        "options": ["Ordered", "Unordered", "Immutable", "Static"],
+        "answer": "Ordered",
+        "subtopic": "properties"
+      }
+    ],
+    "medium": [
+      {
+        "question": "What does append() do?",
+        "options": ["Adds element", "Removes element", "Sorts list", "Clears list"],
+        "answer": "Adds element",
+        "subtopic": "list_methods"
+      },
+      {
+        "question": "What does list[1] access?",
+        "options": ["Second element", "First element", "Last element", "Error"],
+        "answer": "Second element",
+        "subtopic": "indexing"
+      },
+      {
+        "question": "Which method removes element by value?",
+        "options": ["remove()", "pop()", "delete()", "clear()"],
+        "answer": "remove()",
+        "subtopic": "list_methods"
+      },
+      {
+        "question": "Which method removes by index?",
+        "options": ["pop()", "remove()", "del()", "cut()"],
+        "answer": "pop()",
+        "subtopic": "list_methods"
+      },
+      {
+        "question": "Lists are mutable?",
+        "options": ["Yes", "No", "Sometimes", "Never"],
+        "answer": "Yes",
+        "subtopic": "properties"
+      }
+    ],
+    "hard": [
+      {
+        "question": "What is output?\na=[1,2,3]\na.append(4)\nprint(a)",
+        "options": ["[1,2,3,4]", "[4,1,2,3]", "[1,2,3]", "Error"],
+        "answer": "[1,2,3,4]",
+        "subtopic": "list_methods"
+      },
+      {
+        "question": "Negative indexing -1 refers to?",
+        "options": ["Last element", "First element", "Error", "Second last"],
+        "answer": "Last element",
+        "subtopic": "indexing"
+      },
+      {
+        "question": "Which creates a copy?",
+        "options": ["a.copy()", "b=a", "clone()", "assign()"],
+        "answer": "a.copy()",
+        "subtopic": "copying"
+      },
+      {
+        "question": "Which method sorts list?",
+        "options": ["sort()", "order()", "arrange()", "sequence()"],
+        "answer": "sort()",
+        "subtopic": "list_methods"
+      },
+      {
+        "question": "What does clear() do?",
+        "options": ["Removes all items", "Deletes list", "Sorts list", "Error"],
+        "answer": "Removes all items",
+        "subtopic": "list_methods"
+      }
+    ]
+  },
+
+  "loops": {
+    "easy": [
+      {
+        "question": "Which loop repeats code?",
+        "options": ["for", "if", "def", "class"],
+        "answer": "for",
+        "subtopic": "loop_basics"
+      },
+      {
+        "question": "Which loop runs until condition false?",
+        "options": ["while", "for", "if", "elif"],
+        "answer": "while",
+        "subtopic": "while_loop"
+      },
+      {
+        "question": "range(5) runs how many times?",
+        "options": ["5", "4", "6", "Error"],
+        "answer": "5",
+        "subtopic": "range_function"
+      },
+      {
+        "question": "Which keyword stops loop?",
+        "options": ["break", "stop", "exit", "end"],
+        "answer": "break",
+        "subtopic": "loop_control"
+      },
+      {
+        "question": "Which keyword skips iteration?",
+        "options": ["continue", "break", "pass", "skip"],
+        "answer": "continue",
+        "subtopic": "loop_control"
+      }
+    ],
+    "medium": [
+      {
+        "question": "for i in range(3) prints?",
+        "options": ["0 1 2", "1 2 3", "0 1 2 3", "Error"],
+        "answer": "0 1 2",
+        "subtopic": "range_function"
+      },
+      {
+        "question": "while loop runs until?",
+        "options": ["Condition false", "Condition true", "Break", "Error"],
+        "answer": "Condition false",
+        "subtopic": "while_loop"
+      },
+      {
+        "question": "Which keyword does nothing?",
+        "options": ["pass", "skip", "null", "none"],
+        "answer": "pass",
+        "subtopic": "loop_control"
+      },
+      {
+        "question": "Nested loop means?",
+        "options": ["Loop inside loop", "Loop after loop", "Error", "Infinite"],
+        "answer": "Loop inside loop",
+        "subtopic": "nested_loops"
+      },
+      {
+        "question": "Which creates infinite loop?",
+        "options": ["while True", "for range()", "break", "stop"],
+        "answer": "while True",
+        "subtopic": "infinite_loops"
+      }
+    ],
+    "hard": [
+      {
+        "question": "What is output?\nfor i in range(1,4): print(i)",
+        "options": ["1 2 3", "0 1 2", "1 2 3 4", "Error"],
+        "answer": "1 2 3",
+        "subtopic": "range_function"
+      },
+      {
+        "question": "Which loop is best when count known?",
+        "options": ["for", "while", "do-while", "repeat"],
+        "answer": "for",
+        "subtopic": "loop_selection"
+      },
+      {
+        "question": "What happens after break?",
+        "options": ["Loop stops", "Next iteration", "Error", "Restart"],
+        "answer": "Loop stops",
+        "subtopic": "loop_control"
+      },
+      {
+        "question": "continue does what?",
+        "options": ["Skips iteration", "Stops loop", "Error", "Ends program"],
+        "answer": "Skips iteration",
+        "subtopic": "loop_control"
+      },
+      {
+        "question": "Which loop checks condition first?",
+        "options": ["while", "for", "do-while", "repeat"],
+        "answer": "while",
+        "subtopic": "while_loop"
+      }
+    ]
+  },
+
+  "functions": {
+    "easy": [
+      {
+        "question": "Which keyword defines a function?",
+        "options": ["def", "func", "function", "define"],
+        "answer": "def",
+        "subtopic": "function_definition"
+      },
+      {
+        "question": "Functions are used to?",
+        "options": ["Reuse code", "Loop code", "Store data", "Print output"],
+        "answer": "Reuse code",
+        "subtopic": "purpose"
+      },
+      {
+        "question": "What do functions return?",
+        "options": ["Value", "Loop", "Condition", "Class"],
+        "answer": "Value",
+        "subtopic": "return_values"
+      },
+      {
+        "question": "Which keyword returns value?",
+        "options": ["return", "give", "send", "output"],
+        "answer": "return",
+        "subtopic": "return_values"
+      },
+      {
+        "question": "Functions reduce?",
+        "options": ["Code repetition", "Speed", "Errors", "Memory"],
+        "answer": "Code repetition",
+        "subtopic": "purpose"
+      }
+    ],
+    "medium": [
+      {
+        "question": "Function parameters are?",
+        "options": ["Inputs", "Outputs", "Loops", "Classes"],
+        "answer": "Inputs",
+        "subtopic": "parameters"
+      },
+      {
+        "question": "Arguments are passed when?",
+        "options": ["Calling function", "Defining function", "Importing", "Returning"],
+        "answer": "Calling function",
+        "subtopic": "arguments"
+      },
+      {
+        "question": "Which creates reusable code?",
+        "options": ["Function", "Loop", "Condition", "Class"],
+        "answer": "Function",
+        "subtopic": "purpose"
+      },
+      {
+        "question": "What is scope?",
+        "options": ["Variable visibility", "Loop size", "Function length", "Error"],
+        "answer": "Variable visibility",
+        "subtopic": "scope"
+      },
+      {
+        "question": "Local variables exist where?",
+        "options": ["Inside function", "Outside", "Global", "Everywhere"],
+        "answer": "Inside function",
+        "subtopic": "scope"
+      }
+    ],
+    "hard": [
+      {
+        "question": "What happens without return?",
+        "options": ["Returns None", "Error", "0", "False"],
+        "answer": "Returns None",
+        "subtopic": "return_values"
+      },
+      {
+        "question": "What is recursion?",
+        "options": ["Function calling itself", "Loop", "Condition", "Error"],
+        "answer": "Function calling itself",
+        "subtopic": "recursion"
+      },
+      {
+        "question": "Which avoids global variable?",
+        "options": ["Parameters", "Loops", "Conditions", "Print"],
+        "answer": "Parameters",
+        "subtopic": "parameters"
+      },
+      {
+        "question": "What is lambda?",
+        "options": ["Anonymous function", "Loop", "Class", "Module"],
+        "answer": "Anonymous function",
+        "subtopic": "lambda"
+      },
+      {
+        "question": "Which keyword defines lambda?",
+        "options": ["lambda", "def", "func", "anon"],
+        "answer": "lambda",
+        "subtopic": "lambda"
+      }
+    ]
+  }
+}

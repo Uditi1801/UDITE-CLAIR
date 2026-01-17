@@ -1,0 +1,157 @@
+/* ===== FORCE RESET ===== */
+.topics-wrapper,
+.topics-grid,
+.topic-card {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block;
+}
+
+/* ===== PAGE ===== */
+.topics-wrapper {
+    max-width: 1200px;
+    margin: 120px auto;
+    padding: 0 24px;
+    text-align: center;
+}
+
+/* ===== HEADINGS ===== */
+.page-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #e8e8ea;
+}
+
+.page-subtitle {
+    color: #9ca3af;
+    margin-bottom: 50px;
+}
+
+/* ===== GRID ===== */
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+/* ===== CARD ===== */
+.topic-card {
+    background: #1c1c21;
+    padding: 28px;
+    border-radius: 18px;
+    text-align: left;
+    text-decoration: none;
+    color: #ffffff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    min-height: 160px;
+}
+
+/* ===== TEXT ===== */
+.topic-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.topic-desc {
+    font-size: 0.9rem;
+    color: #c7c7cc;
+    margin-bottom: 18px;
+}
+
+.topic-cta {
+    font-size: 0.85rem;
+    color: #d6b4ff;
+}
+/* ================= CARD ANIMATION ================= */
+
+/* Cards are visible by default */
+.animate-card {
+    animation: cardEnter 0.7s ease both;
+}
+
+/* Elegant stagger */
+.animate-card:nth-child(1) { animation-delay: 0.08s; }
+.animate-card:nth-child(2) { animation-delay: 0.18s; }
+.animate-card:nth-child(3) { animation-delay: 0.28s; }
+.animate-card:nth-child(4) { animation-delay: 0.38s; }
+.animate-card:nth-child(5) { animation-delay: 0.48s; }
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.choice-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 14, 17, 0.75);
+    backdrop-filter: blur(12px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.choice-box {
+    background: #0e0e11;
+    padding: 48px;
+    border-radius: 26px;
+    text-align: center;
+    width: 420px;
+
+    /* THICK SOFT BORDER */
+    border: 2px solid rgba(255, 200, 220, 0.3);
+    box-shadow:
+        0 0 0 6px rgba(255, 200, 220, 0.05),
+        0 40px 90px rgba(0, 0, 0, 0.7);
+}
+
+.choice-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.choice-box p {
+    color: #bdbdc7;
+    margin-bottom: 32px;
+}
+
+.choice-actions {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+}
+
+.choice-btn {
+    padding: 14px 24px;
+    border-radius: 20px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.35s ease;
+}
+
+.choice-btn.primary {
+    background: #c08497;
+    color: #0e0e11;
+}
+
+.choice-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(192, 132, 151, 0.45);
+}
+
+.choice-btn.muted {
+    background: rgba(255,255,255,0.06);
+    color: #9a9aa2;
+    cursor: not-allowed;
+}
+

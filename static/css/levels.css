@@ -1,0 +1,90 @@
+/* ===== LEVEL PAGE LAYOUT ===== */
+
+.level-container {
+    min-height: 100vh;
+    padding: 120px 24px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.level-title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.level-subtitle {
+    opacity: 0.8;
+    margin-bottom: 48px;
+}
+
+/* ===== LEVEL GRID ===== */
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+    gap: 28px;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* ===== LEVEL CARD ===== */
+
+.level-card {
+    padding: 28px 20px;
+    border-radius: 18px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: center;
+
+    background: var(--card);
+    color: var(--text);
+}
+
+.level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+}
+
+/* ===== DARK TOGGLE ===== */
+
+.dark-toggle {
+    position: fixed;
+    top: 24px;
+    right: 28px;
+    z-index: 1000;
+}
+
+.dark-toggle input {
+    width: 42px;
+    height: 22px;
+    appearance: none;
+    background: #bbb;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+}
+
+.dark-toggle input::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.25s ease;
+}
+
+.dark-toggle input:checked {
+    background: #222;
+}
+
+.dark-toggle input:checked::before {
+    transform: translateX(20px);
+}

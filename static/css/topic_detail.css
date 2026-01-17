@@ -1,0 +1,101 @@
+.topic-hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.topic-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(192,132,151,0.35), transparent 70%);
+    filter: blur(120px);
+    animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-40px); }
+}
+
+.topic-content {
+    position: relative;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.topic-content h1 {
+    font-size: 3rem;
+    margin-bottom: 14px;
+}
+
+.topic-content p {
+    opacity: 0.75;
+    margin-bottom: 32px;
+}
+
+/* Theme examples */
+.rose { background: #0e0e11; }
+.lavender { background: #0c0d16; }
+.sage { background: #0e1110; }
+.midnight { background: #0a0a12; }
+.champagne { background: #120f0b; }
+/* ===== PRACTICE SECTION ===== */
+
+.practice-section {
+  margin-top: 3.5rem;
+}
+
+.practice-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+
+.practice-actions {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.practice-btn {
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--text);
+  transition: all 0.35s ease;
+}
+
+.practice-btn.primary {
+  background: var(--accent);
+  color: #0e0e11;
+}
+
+.practice-btn.primary:hover,
+.practice-btn.soft:hover {
+  transform: translateY(-3px);
+}
+
+/* Levels are secondary */
+.levels {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.8rem;
+}
+
+.hidden {
+  display: none;
+}

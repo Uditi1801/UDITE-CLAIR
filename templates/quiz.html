@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ topic.replace('_',' ').title() }} • {{ level.title() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="theme-page
+  {% if topic == 'variables' %}rose
+  {% elif topic == 'if_else' %}lavender
+  {% elif topic == 'arrays' %}champagne
+  {% elif topic == 'loops' %}sage
+  {% elif topic == 'functions' %}midnight
+  {% endif %}
+">
+
+<style>
+.quiz-wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 5rem 2rem;
+}
+
+.quiz-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.7rem;
+}
+
+.progress-bar {
+  height: 7px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.6s ease;
+}
+
+.question-card { display: none; }
+.question-card.active { display: block; }
+
+.options { display: grid; gap: 1rem; }
+
+.option {
+  padding: 1.1rem 1.6rem;
+  border-radius: 18px;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+}
+
+.option.selected {
+  background: var(--accent);
+  color: #0e0e11;
+}
+
+.next-btn {
+  margin-top: 2.5rem;
+  padding: 14px 36px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  cursor: pointer;
+}
+
+.result-screen {
+  display: none;
+  text-align: center;
+}
+
+.focus-box {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.focus-box h3 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1rem;
+}
+
+.focus-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.focus-box li {
+  margin: .4rem 0;
+  font-size: .95rem;
+}
+
+.quiz-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quiz-actions button {
+  padding: 12px 30px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  cursor: pointer;
+}
+</style>
+
+<div class="quiz-wrapper">
+
+<h1 class="quiz-title">
+  {{ topic.replace('_',' ').title() }} • {{ level.title() }}
+</h1>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+{% for q in questions %}
+<div class="question-card {% if loop.first %}active{% endif %}"
+     data-subtopic="{{ q.subtopic }}">
+  <div class="question">{{ q.question }}</div>
+  <div class="options" data-answer="{{ q.answer }}">
+    {% for opt in q.options %}
+    <div class="option" data-value="{{ opt }}">{{ opt }}</div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+<div class="result-screen" id="resultScreen">
+  <h1>Beautiful work ✨</h1>
+  <p id="resultText"></p>
+
+  <div class="focus-box" id="focusBox" style="display:none;">
+    <h3>Suggested focus areas</h3>
+    <ul id="focusList"></ul>
+  </div>
+
+  <div class="quiz-actions" id="quizActions"></div>
+</div>
+
+<button class="next-btn" id="nextBtn">Next →</button>
+
+</div>
+
+<script>
+const topic = "{{ topic }}";
+const level = "{{ level }}";
+
+const cards = document.querySelectorAll(".question-card");
+const nextBtn = document.getElementById("nextBtn");
+const progressFill = document.getElementById("progressFill");
+const resultScreen = document.getElementById("resultScreen");
+const resultText = document.getElementById("resultText");
+const quizActions = document.getElementById("quizActions");
+const focusBox = document.getElementById("focusBox");
+const focusList = document.getElementById("focusList");
+
+let current = 0;
+let score = 0;
+let weakness = {};
+
+/* OPTION SELECT */
+document.querySelectorAll(".option").forEach(opt => {
+  opt.onclick = () => {
+    opt.parentElement.querySelectorAll(".option")
+      .forEach(o => o.classList.remove("selected"));
+    opt.classList.add("selected");
+  };
+});
+
+/* NEXT */
+nextBtn.onclick = () => {
+  const card = cards[current];
+  const selected = card.querySelector(".selected");
+  if (!selected) return;
+
+  const correct = card.querySelector(".options").dataset.answer;
+  const subtopic = card.dataset.subtopic;
+
+  if (selected.dataset.value === correct) {
+    score++;
+  } else {
+    weakness[subtopic] = (weakness[subtopic] || 0) + 1;
+  }
+
+  card.classList.remove("active");
+  current++;
+
+  progressFill.style.width = (current / cards.length) * 100 + "%";
+
+  if (current < cards.length) {
+    cards[current].classList.add("active");
+  } else {
+    nextBtn.style.display = "none";
+    showResult();
+  }
+};
+
+/* RESULT */
+function showResult() {
+  const percent = Math.round((score / cards.length) * 100);
+  resultText.innerHTML = `<strong>${score}</strong> / ${cards.length}<br>${percent}% accuracy`;
+
+  const weakTopics = Object.entries(weakness)
+    .sort((a,b) => b[1] - a[1])
+    .map(w => w[0]);
+
+  if (weakTopics.length) {
+    focusBox.style.display = "block";
+    weakTopics.forEach(w => {
+      focusList.innerHTML += `<li>${w.replace(/_/g," ")}</li>`;
+    });
+  }
+
+  localStorage.setItem("udivaProgress", JSON.stringify({
+    topic, level, focus: weakTopics
+  }));
+
+  quizActions.innerHTML = `
+    <button onclick="location.reload()">Reattempt</button>
+    <button onclick="goToRevision()">Revise focus areas</button>
+  `;
+
+  resultScreen.style.display = "block";
+}
+
+function goToRevision() {
+  const data = JSON.parse(localStorage.getItem("udivaProgress"));
+  const focus = data?.focus || [];
+  if (!focus.length) {
+    location.href = "/topic/" + topic;
+  } else {
+    location.href = `/topic/${topic}?focus=${focus.join(",")}`;
+  }
+}
+</script>
+
+</div>
+{% endblock %}

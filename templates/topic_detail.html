@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}
+Udiva • {{ topic.replace('_', ' ').title() }}
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== THEME WRAPPER (PER TOPIC) ===== -->
+<div class="theme-page
+  {% if topic == 'variables' %}rose
+  {% elif topic == 'if_else' %}lavender
+  {% elif topic == 'arrays' %}champagne
+  {% elif topic == 'loops' %}sage
+  {% elif topic == 'functions' %}midnight
+  {% endif %}
+">
+
+<style>
+/* ===== TOPIC DETAIL PAGE ===== */
+
+.topic-hero {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 8vw;
+}
+
+.topic-content {
+  max-width: 650px;
+  animation: reveal 0.9s cubic-bezier(.19,1,.22,1) forwards;
+}
+
+.topic-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.4rem;
+  margin-bottom: 1rem;
+}
+
+.topic-desc {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+/* ===== PRACTICE SECTION (DIOR MINIMAL) ===== */
+
+.practice-section {
+  margin-top: 3.5rem;
+}
+
+.practice-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+}
+
+.practice-actions {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.practice-btn {
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--text);
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+/* Read notes — soft */
+.practice-btn.soft {
+  opacity: 0.85;
+}
+
+.practice-btn.soft:hover {
+  opacity: 1;
+}
+
+/* Practice quiz — confident */
+.practice-btn.primary {
+  background: var(--accent);
+  color: #0e0e11;
+}
+
+.practice-btn.primary:hover {
+  transform: translateY(-3px);
+}
+
+/* ===== LEVELS (SECONDARY CHOICE) ===== */
+
+.levels {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.level-btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.level-btn:hover {
+  background: var(--accent);
+  color: #0e0e11;
+  transform: translateY(-3px);
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===== ANIMATION ===== */
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<section class="topic-hero">
+  <div class="topic-content">
+
+    <h1 class="topic-title">
+      {{ topic.replace('_', ' ').title() }}
+    </h1>
+
+    <p class="topic-desc">
+      {{ topics[topic].desc if topics is defined else
+         "Master " ~ topic.replace('_', ' ').title() ~ " with structured quizzes." }}
+    </p>
+
+    <!-- ===== INTENT FIRST (FREE WILL) ===== -->
+    <div class="practice-section">
+
+      <p class="practice-label">
+        Choose how you’d like to continue
+      </p>
+
+      <div class="practice-actions">
+        <a href="{{ url_for('read', topic=topic) }}" class="practice-btn soft">
+          Read Notes
+        </a>
+
+        <button class="practice-btn primary" onclick="showLevels()">
+          Practice with Quiz
+        </button>
+      </div>
+
+      <!-- ===== LEVELS APPEAR AFTER QUIZ INTENT ===== -->
+      <div class="levels hidden" id="levels">
+        <a href="{{ url_for('quiz', topic=topic, level='easy') }}" class="level-btn">
+          Easy
+        </a>
+        <a href="{{ url_for('quiz', topic=topic, level='medium') }}" class="level-btn">
+          Medium
+        </a>
+        <a href="{{ url_for('quiz', topic=topic, level='hard') }}" class="level-btn">
+          Hard
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+function showLevels() {
+  document.getElementById("levels").classList.remove("hidden");
+}
+</script>
+</div>
+{% endblock %}

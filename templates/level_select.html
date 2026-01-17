@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/levels.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="theme-page {{ theme }}" data-topic="{{ topic }}">
+
+    <div class="dark-toggle">
+        <input type="checkbox" id="darkSwitch">
+    </div>
+
+    <div class="level-container">
+        <h1 class="level-title">
+            {{ topic.replace("_"," ").title() }}
+        </h1>
+
+        <p class="level-subtitle">
+            Select difficulty level
+        </p>
+
+        <div class="level-grid">
+            <!-- ✅ THESE LINKS ARE CRITICAL -->
+            <a href="/quiz/{{ topic }}/easy" class="level-card">Easy</a>
+            <a href="/quiz/{{ topic }}/medium" class="level-card">Medium</a>
+            <a href="/quiz/{{ topic }}/hard" class="level-card">Hard</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/theme-toggle.js') }}"></script>
+
+{% endblock %}

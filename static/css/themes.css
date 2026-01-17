@@ -1,0 +1,203 @@
+/* =========================================================
+   U D I V A   R O Y A L   T H E M E   S Y S T E M
+   Quiet Luxury • Editorial • Production Ready
+========================================================= */
+
+/* ================= BASE THEME LAYER ================= */
+
+.theme-page {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #111111;
+  --muted: rgba(0,0,0,0.55);
+  --accent: rgba(0,0,0,0.12);
+
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+
+  transition:
+    background 0.35s cubic-bezier(.19,1,.22,1),
+    color 0.35s cubic-bezier(.19,1,.22,1);
+}
+
+/* Cards inside themed pages */
+.theme-card {
+  background: var(--card);
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,0.06);
+}
+
+/* Muted text helper */
+.theme-muted {
+  color: var(--muted);
+}
+
+/* ================= ROYAL LIGHT THEMES ================= */
+
+/* Blush Silk — Dior Pink */
+.rose {
+  --bg: #f4efef;
+  --card: #ffffff;
+  --text: #2b1e23;
+  --muted: #7a5a63;
+  --accent: rgba(185,120,140,0.22);
+}
+
+/* Imperial Lavender */
+.lavender {
+  --bg: #f1f0f8;
+  --card: #ffffff;
+  --text: #2a2636;
+  --muted: #6c6884;
+  --accent: rgba(160,150,215,0.22);
+}
+
+/* Champagne Pearl */
+.champagne {
+  --bg: #f6f2ea;
+  --card: #ffffff;
+  --text: #2c2a24;
+  --muted: #7b7464;
+  --accent: rgba(200,185,145,0.28);
+}
+
+/* Sage Marble */
+.sage {
+  --bg: #eef3ef;
+  --card: #ffffff;
+  --text: #1f2a25;
+  --muted: #61756c;
+  --accent: rgba(145,185,165,0.26);
+}
+
+/* Ice Slate (Luxury Blue) */
+.midnight {
+  --bg: #eef1f7;
+  --card: #ffffff;
+  --text: #1f2433;
+  --muted: #5d6680;
+  --accent: rgba(120,140,210,0.28);
+}
+
+/* ================= ROYAL DARK THEMES ================= */
+
+/* Noir Rose */
+.rose.dark {
+  --bg: #140c10;
+  --card: #1f151a;
+  --text: #f3e4ea;
+  --muted: #c8a2b0;
+  --accent: rgba(185,120,140,0.32);
+}
+
+/* Royal Violet Night */
+.lavender.dark {
+  --bg: #121123;
+  --card: #1b1935;
+  --text: #e8e6fb;
+  --muted: #b6b2e2;
+  --accent: rgba(160,150,215,0.34);
+}
+
+/* Gilded Charcoal */
+.champagne.dark {
+  --bg: #16140f;
+  --card: #221f18;
+  --text: #f6f1e7;
+  --muted: #d1c6a4;
+  --accent: rgba(200,185,145,0.34);
+}
+
+/* Forest Ink */
+.sage.dark {
+  --bg: #0f1613;
+  --card: #18231d;
+  --text: #e4f0ea;
+  --muted: #a6c4b6;
+  --accent: rgba(145,185,165,0.34);
+}
+
+/* Midnight Sapphire */
+.midnight.dark {
+  --bg: #0c1020;
+  --card: #141a33;
+  --text: #e6ebf6;
+  --muted: #aab4d8;
+  --accent: rgba(120,140,210,0.36);
+}
+
+/* ================= GLASS SYSTEM ================= */
+
+/* Premium glass (quiz buttons, cards, overlays) */
+.theme-glass {
+  background: color-mix(in srgb, var(--card) 65%, transparent);
+  backdrop-filter: blur(22px);
+  border: 1px solid var(--accent);
+  border-radius: 18px;
+}
+
+/* Glass button */
+.theme-button {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 14px 34px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border 0.25s ease;
+}
+
+.theme-button:hover {
+  transform: translateY(-2px);
+  background: var(--accent);
+}
+
+/* ================= DARK MODE TOGGLE ================= */
+
+.dark-toggle {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 1000;
+}
+
+.dark-toggle input {
+  width: 44px;
+  height: 24px;
+  appearance: none;
+  background: #b5b5b5;
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dark-toggle input::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.25s ease;
+}
+
+.dark-toggle input:checked {
+  background: #000;
+}
+
+.dark-toggle input:checked::before {
+  transform: translateX(20px);
+}

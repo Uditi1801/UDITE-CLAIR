@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}
+Udiva • {{ content.title }} — Notes
+{% endblock %}
+
+{% block content %}
+
+<style>
+/* ================= STUDY-FIRST READING MODE ================= */
+
+html, body {
+  background: #f4f5f8;
+  color: #1b1b1f;
+}
+
+/* ================= PAGE LAYOUT ================= */
+
+.reading-screen {
+  min-height: 100vh;
+  padding: 5.5rem 6vw;
+}
+
+/* ================= CONTENT SURFACE ================= */
+
+.reading-content {
+  max-width: 760px;
+  margin: auto;
+  background: #ffffff;
+  padding: 4.5rem 4.8rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+/* ================= TYPOGRAPHY ================= */
+
+.reading-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.4rem;
+  color: #111;
+}
+
+.reading-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a7a85;
+  margin-bottom: 3rem;
+}
+
+/* ================= BODY TEXT ================= */
+
+.reading-content p {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  margin-bottom: 1.6rem;
+  color: #2b2b30;
+}
+
+.reading-content h3 {
+  font-size: 1.35rem;
+  margin-top: 3.2rem;
+  margin-bottom: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1d;
+}
+
+/* ================= DIVIDER ================= */
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(0,0,0,0.1);
+  margin: 3.2rem 0;
+}
+
+/* ================= ACTIONS ================= */
+
+.reading-actions {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.read-btn {
+  padding: 13px 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: transparent;
+  color: #222;
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+}
+
+.read-btn.primary {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+}
+
+.read-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ================= PRINT (PDF) MODE ================= */
+
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+  .reading-screen {
+    padding: 0 !important;
+  }
+
+  .reading-content {
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .reading-actions {
+    display: none !important;
+  }
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<div class="reading-screen">
+  <div class="reading-content">
+
+    <h1 class="reading-title">{{ content.title }}</h1>
+
+    <p class="reading-subtitle">
+      Complete concept guide
+    </p>
+
+    {% for section in content.sections %}
+      <h3>{{ section.heading }}</h3>
+
+      {% for paragraph in section.text %}
+        <p>{{ paragraph }}</p>
+      {% endfor %}
+
+      <div class="divider"></div>
+    {% endfor %}
+
+
+    <div class="divider"></div>
+
+<h3>Your Notes</h3>
+
+<textarea
+  id="udivaNotes"
+  rows="6"
+  placeholder="Write your notes here…"
+  style="
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.25);
+    font-size: 0.95rem;
+    resize: vertical;
+    margin-bottom: 2.5rem;
+  "
+></textarea>
+
+    <div class="reading-actions">
+      <a href="{{ url_for('topic_detail', topic=topic) }}" class="read-btn">
+        ← Back
+      </a>
+
+      <a href="{{ url_for('quiz', topic=topic, level='easy') }}" class="read-btn primary">
+        Start Practice
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ================= GLOBAL PDF DOWNLOAD ================= */
+function downloadPDF() {
+  console.log("GLOBAL PDF DOWNLOAD");
+  window.print();
+}
+</script>
+<script>
+(function () {
+  const KEY = "udiva-notes-" + "{{ topic }}";
+  const box = document.getElementById("udivaNotes");
+  if (!box) return;
+
+  // restore
+  const saved = localStorage.getItem(KEY);
+  if (saved !== null) {
+    box.value = saved;
+  }
+
+  // autosave every 500ms
+  setInterval(() => {
+    localStorage.setItem(KEY, box.value);
+  }, 500);
+})();
+</script>
+
+
+
+
+
+{% endblock %}

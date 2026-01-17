@@ -1,0 +1,427 @@
+{% extends "read.html" %}
+{% block title %}Variables | Udiva{% endblock %}
+{% block content %}
+
+<style>
+body,.site-shell{background:#f6f6f7!important}
+
+/* ===== CONTAINER ===== */
+.read-container{
+  max-width:900px;
+  margin:2.5rem auto 3.5rem;
+  padding:2.4rem 2.6rem 3.2rem;
+  background:#ffffff;
+  border-radius:24px;
+  box-shadow:0 30px 70px rgba(0,0,0,.08);
+}
+
+/* ===== TOOLBAR ===== */
+.read-toolbar{
+  display:flex;
+  gap:.7rem;
+  flex-wrap:wrap;
+  margin-bottom:1.7rem;
+}
+.read-toolbar button{
+  padding:.65rem 1.45rem;
+  border-radius:999px;
+  border:1px solid #c08497;
+  background:#fff;
+  font-size:.82rem;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+/* ===== NOTES + CANVAS ===== */
+.notes-wrapper{position:relative}
+#notesContent{color:#1e1e1e}
+#drawCanvas{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+}
+
+/* ===== CURSORS ===== */
+#drawCanvas.pen{
+  cursor:url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'>\
+  <text y='20' font-size='20'>✏️</text>\
+  </svg>") 0 24, crosshair;
+}
+#drawCanvas.eraser{cursor:cell}
+
+/* ===== TYPOGRAPHY ===== */
+.read-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem;
+  margin-bottom:.3rem;
+}
+.read-subtitle{
+  font-size:.75rem;
+  letter-spacing:.18em;
+  color:#9a9a9a;
+  margin-bottom:1.4rem;
+}
+
+/* ===== SECTIONS ===== */
+.read-section{
+  margin-bottom:2.2rem;
+  padding:1.4rem 1.6rem;
+  border-radius:18px;
+}
+.read-section h2{
+  font-size:1.45rem;
+  margin-bottom:.6rem;
+}
+.read-section p{
+  font-size:1.08rem;
+  line-height:1.75;
+}
+
+/* ===== BOXES ===== */
+.story-box{
+  background:#faf7f9;
+  border-left:4px solid #c08497;
+  padding:1.1rem 1.4rem;
+  border-radius:16px;
+}
+.note-box{
+  background:#fff4f7;
+  padding:1.1rem 1.4rem;
+  border-radius:16px;
+  margin-top:.9rem;
+}
+.code-block{
+  background:#f2f2f4;
+  padding:1.1rem 1.4rem;
+  border-radius:16px;
+  font-family:monospace;
+  margin-top:.9rem;
+}
+
+/* ===== DIAGRAMS ===== */
+.diagram{display:block;margin:1.6rem auto}
+.diagram.memory{max-width:720px}
+.diagram.flow{max-width:360px}
+
+/* ===== REVEAL ===== */
+.reveal-btn{
+  margin-top:.8rem;
+  padding:.6rem 1.45rem;
+  border-radius:999px;
+  border:1px solid #c08497;
+  background:#fff;
+  font-size:.82rem;
+  cursor:pointer;
+}
+.answer-box{
+  margin-top:1rem;
+  padding:1.1rem 1.4rem;
+  background:#faf7f9;
+  border-radius:16px;
+  display:none;
+}
+
+/* ===== RECAP ===== */
+.recap-card{
+  background:rgba(192,132,151,.15);
+  padding:1.3rem 1.6rem;
+  border-radius:18px;
+  font-size:1.05rem;
+}
+
+/* ===== CTA ===== */
+.cta{
+  display:flex;
+  justify-content:space-between;
+  margin-top:2.2rem;
+}
+.cta .practice{
+  background:#c08497;
+  padding:.8rem 2.4rem;
+  border-radius:999px;
+  color:#1e1e1e;
+  font-size:.84rem;
+  font-weight:600;
+}
+.download-btn{
+  padding:.65rem 1.45rem;
+  border-radius:999px;
+  border:1px solid #1e1e1e;
+  background:#1e1e1e;
+  color:#fff;
+  font-size:.82rem;
+  text-decoration:none;
+  cursor:pointer;
+  white-space:nowrap;
+}
+@media print{
+  .read-toolbar,
+  .cta{
+    display:none!important;
+  }
+  body{
+    background:#fff!important;
+  }
+  .read-container{
+    box-shadow:none!important;
+    margin:0!important;
+    padding:0!important;
+  }
+}
+
+
+
+</style>
+
+<div class="read-container">
+
+<!-- TOOLBAR -->
+<div class="read-toolbar">
+  <button onclick="startReading()">🔊 Read</button>
+  <button onclick="pauseReading()">⏸ Pause</button>
+  <button onclick="resumeReading()">▶ Resume</button>
+  <button onclick="stopReading()">⏹ Stop</button>
+  <button onclick="enableEdit()">✍ Edit</button>
+  <button onclick="underline()">U Underline</button>
+  <button onclick="highlight()">🖍 Highlight</button>
+  <button onclick="togglePen()">✏ Draw</button>
+  <button onclick="toggleEraser()">🧽 Erase</button>
+  <button onclick="clearCanvas()">🧹 Clear</button>
+  <button onclick="saveNotes()">💾 Save</button>
+  <button onclick="window.print()">📄 Download PDF</button>
+
+
+
+
+</div>
+
+<div class="notes-wrapper">
+<canvas id="drawCanvas"></canvas>
+
+<div id="notesContent" contenteditable="false">
+
+<h1 class="read-title">Variables</h1>
+<div class="read-subtitle">THE FOUNDATION OF ALL PROGRAMS</div>
+
+<!-- WHAT IS A VARIABLE -->
+<div class="read-section">
+<h2>What is a Variable?</h2>
+<p>
+A <strong>variable</strong> is a named storage location in computer memory used to store data.
+Instead of hard-coding values directly into programs, we store them in variables so that
+data can be reused, updated, and managed efficiently.
+</p>
+
+<div class="story-box">
+🏷 <strong>Name</strong> → Identifier used in code<br>
+📦 <strong>Memory</strong> → Physical storage location<br>
+🧾 <strong>Value</strong> → Actual data stored
+</div>
+</div>
+
+<!-- MEMORY DIAGRAM -->
+<svg class="diagram memory" viewBox="0 0 600 260">
+<rect x="150" y="40" width="300" height="160" rx="20"
+ fill="#faf7f9" stroke="#c08497" stroke-width="2"/>
+<text x="300" y="85" text-anchor="middle">Variable Name: marks</text>
+<text x="300" y="130" text-anchor="middle">Memory Location</text>
+<text x="300" y="165" text-anchor="middle">Stored Value: 95</text>
+</svg>
+
+<!-- FLOW -->
+<div class="read-section">
+<h2>How Variables Work</h2>
+
+<svg class="diagram flow" viewBox="0 0 300 360">
+<rect x="50" y="20" width="200" height="60" rx="14" fill="#fff" stroke="#c08497"/>
+<text x="150" y="55" text-anchor="middle">Declare</text>
+<line x1="150" y1="80" x2="150" y2="120" stroke="#c08497"/>
+
+<rect x="50" y="120" width="200" height="60" rx="14" fill="#fff" stroke="#c08497"/>
+<text x="150" y="155" text-anchor="middle">Assign</text>
+<line x1="150" y1="180" x2="150" y2="220" stroke="#c08497"/>
+
+<rect x="50" y="220" width="200" height="60" rx="14" fill="#fff4f7" stroke="#c08497"/>
+<text x="150" y="255" text-anchor="middle">Use</text>
+</svg>
+
+<div class="note-box">
+<strong>Declare</strong> → Create the variable<br>
+<strong>Assign</strong> → Store a value<br>
+<strong>Use</strong> → Read or modify the value
+</div>
+</div>
+
+<!-- EXAMPLE -->
+<div class="read-section">
+<h2>Example</h2>
+
+<div class="code-block">
+int x = 10;<br>
+x = x + 5;
+</div>
+
+<p>
+Here, <code>x</code> starts with the value <strong>10</strong>.
+Then we add <strong>5</strong> to its existing value.
+</p>
+
+<button class="reveal-btn" onclick="revealAnswer()">Reveal final value</button>
+<div class="answer-box" id="answerBox">
+The final value of <strong>x</strong> is <strong>15</strong>.
+</div>
+</div>
+
+<!-- WHY IT MATTERS -->
+<div class="read-section">
+<h2>Why Variables Matter</h2>
+<p>
+Variables allow programs to react to input, store results, and scale to real-world problems.
+Without variables, programming would be rigid and impractical.
+</p>
+</div>
+
+<!-- RECAP -->
+<div class="read-section">
+<h2>Quick Recap</h2>
+<div class="recap-card">
+✔ Variables store data in memory<br>
+✔ Values can change during execution<br>
+✔ Names improve clarity and maintainability<br>
+✔ Every program relies on variables
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="cta">
+<a href="/topics">← Back</a>
+<a class="practice" href="/quiz/variables/easy">Start Quiz</a>
+</div>
+
+</div>
+
+<script>
+const notes=document.getElementById("notesContent");
+const canvas=document.getElementById("drawCanvas");
+const ctx=canvas.getContext("2d");
+
+/* Canvas sizing */
+function resizeCanvas(){
+  canvas.width=notes.scrollWidth;
+  canvas.height=notes.scrollHeight;
+}
+window.addEventListener("load",resizeCanvas);
+window.addEventListener("resize",resizeCanvas);
+
+/* Draw / Erase toggle */
+let mode="off";
+let dragging=false;
+
+function togglePen(){
+  mode = mode==="draw" ? "off" : "draw";
+  canvas.className = mode==="draw" ? "pen" : "";
+  canvas.style.pointerEvents = mode==="draw" ? "auto" : "none";
+}
+function toggleEraser(){
+  mode = mode==="erase" ? "off" : "erase";
+  canvas.className = mode==="erase" ? "eraser" : "";
+  canvas.style.pointerEvents = mode==="erase" ? "auto" : "none";
+}
+
+canvas.onmousedown=e=>{
+  if(mode==="off") return;
+  dragging=true;
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX,e.offsetY);
+};
+canvas.onmousemove=e=>{
+  if(!dragging) return;
+  ctx.lineWidth = mode==="erase" ? 16 : 2;
+  ctx.strokeStyle = mode==="erase" ? "#ffffff" : "#c08497";
+  ctx.lineTo(e.offsetX,e.offsetY);
+  ctx.stroke();
+};
+canvas.onmouseup=()=>dragging=false;
+
+function clearCanvas(){ctx.clearRect(0,0,canvas.width,canvas.height)}
+
+/* Edit */
+function enableEdit(){notes.contentEditable=true;notes.focus()}
+function saveNotes(){notes.contentEditable=false}
+
+/* Underline & Highlight */
+function wrapSelection(style){
+  const sel=window.getSelection();
+  if(!sel.rangeCount) return;
+  const range=sel.getRangeAt(0);
+  if(!notes.contains(range.commonAncestorContainer)) return;
+  const span=document.createElement("span");
+  Object.assign(span.style,style);
+  range.surroundContents(span);
+  sel.removeAllRanges();
+}
+function underline(){wrapSelection({textDecoration:"underline"})}
+function highlight(){wrapSelection({backgroundColor:"#fff3b0"})}
+
+/* Female voice */
+let femaleVoice = null;
+let voicesReady = false;
+
+function loadVoicesStrict(){
+  const voices = speechSynthesis.getVoices();
+
+  // HARD LOCK to Samantha
+  femaleVoice = voices.find(v => v.name === "Samantha");
+
+  // Absolute fallback (still English)
+  if(!femaleVoice){
+    femaleVoice = voices.find(v => v.lang.startsWith("en"));
+  }
+
+  if(femaleVoice){
+    voicesReady = true;
+  }
+}
+
+// FORCE voice loading
+speechSynthesis.onvoiceschanged = loadVoicesStrict;
+loadVoicesStrict();
+
+function startReading(){
+  if(!voicesReady){
+    setTimeout(startReading, 200); // wait until voices load
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utter = new SpeechSynthesisUtterance(
+    document.getElementById("notesContent").innerText
+  );
+
+  utter.voice = femaleVoice;
+
+  // Feminine tuning (VERY IMPORTANT)
+  utter.pitch = 1.35;
+  utter.rate = 0.95;
+
+  speechSynthesis.speak(utter);
+}
+
+function pauseReading(){ speechSynthesis.pause(); }
+function resumeReading(){ speechSynthesis.resume(); }
+function stopReading(){ speechSynthesis.cancel(); }
+function downloadPDF(){
+  const oldTitle = document.title;
+  document.title = "Udiva - Variables Notes";
+  window.print();
+  document.title = oldTitle;
+}
+
+</script>
+
+{% endblock %}

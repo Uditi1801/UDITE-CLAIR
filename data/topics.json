@@ -1,0 +1,23 @@
+
+{
+  "variables": {
+    "title": "Variables and Data Types",
+    "summary": "Learn how variables store data in C++."
+  },
+  "if_else": {
+    "title": "If Else Statements",
+    "summary": "Understand decision making in C++."
+  },
+  "loops": {
+    "title": "Loops",
+    "summary": "Master for and while loops in C++."
+  },
+  "functions": {
+    "title": "Functions",
+    "summary": "Write reusable blocks of code."
+  },
+  "arrays": {
+    "title": "Arrays",
+    "summary": "Store and manipulate multiple values."
+  }
+}

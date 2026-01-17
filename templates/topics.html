@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Udiva • Topics{% endblock %}
+
+{% block content %}
+
+<style>
+/* ===== DIOR TOPICS PAGE ===== */
+
+.topics-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.6rem;
+  animation: fadeDown 0.8s ease forwards;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  margin-bottom: 3rem;
+  animation: fadeDown 1s ease forwards;
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+}
+
+/* ===== CARD ===== */
+.topic-card {
+  background: linear-gradient(180deg, #1c1c25, #17171f);
+  border-radius: 18px;
+  padding: 2rem;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle glow */
+.topic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(192,132,151,0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.topic-card:hover::before {
+  opacity: 1;
+}
+
+.topic-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.55);
+}
+
+/* ===== CONTENT ===== */
+.topic-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.topic-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.topic-cta {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.topic-card:hover .topic-cta {
+  transform: translateX(6px);
+  opacity: 0.8;
+}
+
+/* ===== ANIMATIONS ===== */
+.animate-card {
+  animation: fadeUp 0.9s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div class="topics-wrapper">
+
+  <h1 class="page-title">Start Learning</h1>
+  <p class="page-subtitle">Choose a topic to begin.</p>
+
+  <div class="topics-grid">
+
+    {% for key, topic in topics.items() %}
+
+      <!-- 🔒 KEEPING YOUR WORKING ROUTE -->
+      <a href="{{ url_for('topic_detail', topic=key) }}"
+         class="topic-card animate-card">
+
+        <div class="topic-title">
+          {{ key.replace('_', ' ').title() }}
+        </div>
+
+        <div class="topic-desc">
+          {{ topic.desc }}
+        </div>
+
+        <div class="topic-cta">
+          Start →
+        </div>
+
+      </a>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+{% endblock %}

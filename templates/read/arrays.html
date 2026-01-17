@@ -1,0 +1,373 @@
+{% extends "read.html" %}
+{% block title %}Arrays | Udiva{% endblock %}
+{% block content %}
+
+<style>
+body,.site-shell{background:#f6f6f7!important}
+
+/* ===== CONTAINER ===== */
+.read-container{
+  max-width:880px;
+  margin:4.5rem auto 6rem;
+  padding:4rem 3.2rem 4.8rem;
+  background:#ffffff;
+  border-radius:28px;
+  box-shadow:0 50px 100px rgba(0,0,0,0.08);
+}
+
+/* ===== TOOLBAR ===== */
+.read-toolbar{
+  display:flex;
+  gap:.7rem;
+  flex-wrap:wrap;
+  margin-bottom:2.4rem;
+}
+.read-toolbar button{
+  padding:.65rem 1.45rem;
+  border-radius:999px;
+  border:1px solid #d4a373;
+  background:#fff;
+  font-size:.82rem;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+/* ===== NOTES + CANVAS ===== */
+.notes-wrapper{position:relative}
+#notesContent{color:#1e1e1e}
+#drawCanvas{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+}
+
+/* ===== CURSORS ===== */
+#drawCanvas.pen{
+  cursor:url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'>\
+  <text y='20' font-size='20'>✏️</text>\
+  </svg>") 0 24, crosshair;
+}
+#drawCanvas.eraser{cursor:cell}
+
+/* ===== TYPOGRAPHY ===== */
+.read-title{
+  font-family:'Playfair Display',serif;
+  font-size:3.1rem;
+  margin-bottom:.4rem;
+}
+.read-subtitle{
+  font-size:.85rem;
+  letter-spacing:.22em;
+  color:#9a9a9a;
+  margin-bottom:3.6rem;
+}
+
+/* ===== SECTIONS ===== */
+.read-section{margin-bottom:4rem}
+.read-section h2{
+  font-size:1.55rem;
+  margin-bottom:1rem;
+}
+.read-section p{
+  font-size:1.05rem;
+  line-height:1.95;
+}
+
+/* ===== BOXES ===== */
+.story-box{
+  background:linear-gradient(135deg,#fff9f2,#ffffff);
+  border-left:4px solid #d4a373;
+  padding:1.6rem 1.8rem;
+  border-radius:18px;
+  margin-top:1.8rem;
+}
+.note-box{
+  background:#fff3e6;
+  padding:1.3rem 1.6rem;
+  border-radius:16px;
+  margin-top:1.6rem;
+  font-size:.95rem;
+}
+.code-block{
+  background:#f1f1f3;
+  padding:1.3rem 1.6rem;
+  border-radius:16px;
+  margin-top:1.3rem;
+  font-family:monospace;
+  font-size:.95rem;
+}
+
+/* ===== ARRAY CELLS ===== */
+.array-cell{
+  fill:#fff9f2;
+  stroke:#d4a373;
+  stroke-width:2;
+  rx:12;
+}
+
+/* ===== REVEAL ===== */
+.reveal-btn{
+  margin-top:1.4rem;
+  padding:.7rem 1.6rem;
+  border-radius:999px;
+  border:1px solid #d4a373;
+  background:transparent;
+  font-size:.9rem;
+  cursor:pointer;
+}
+.answer-box{
+  margin-top:1.6rem;
+  padding:1.4rem 1.6rem;
+  background:#fff9f2;
+  border-radius:16px;
+  display:none;
+}
+
+/* ===== RECAP ===== */
+.recap-card{
+  background:rgba(212,163,115,.18);
+  padding:1.3rem 1.6rem;
+  border-radius:18px;
+}
+
+/* ===== CTA ===== */
+.cta{
+  display:flex;
+  justify-content:space-between;
+  margin-top:5rem;
+}
+.cta a{
+  padding:.95rem 2.5rem;
+  border-radius:999px;
+  text-decoration:none;
+}
+.cta .back{
+  border:1px solid #d2d2d2;
+  color:#000;
+}
+.cta .practice{
+  background:#d4a373;
+  color:#000;
+}
+</style>
+
+<div class="read-container">
+
+<!-- TOOLBAR -->
+<div class="read-toolbar">
+  <button onclick="startReading()">🔊 Read</button>
+  <button onclick="pauseReading()">⏸ Pause</button>
+  <button onclick="resumeReading()">▶ Resume</button>
+  <button onclick="stopReading()">⏹ Stop</button>
+  <button onclick="enableEdit()">✍ Edit</button>
+  <button onclick="underline()">U Underline</button>
+  <button onclick="highlight()">🖍 Highlight</button>
+  <button onclick="togglePen()">✏ Draw</button>
+  <button onclick="toggleEraser()">🧽 Erase</button>
+  <button onclick="clearCanvas()">🧹 Clear</button>
+  <button onclick="saveNotes()">💾 Save</button>
+  <button onclick="window.print()">📄 Download PDF</button>
+
+
+</div>
+
+<div class="notes-wrapper">
+<canvas id="drawCanvas"></canvas>
+
+<div id="notesContent" contenteditable="false">
+
+<h1 class="read-title">Arrays</h1>
+<div class="read-subtitle">STORING MANY VALUES TOGETHER</div>
+
+<div class="read-section">
+<h2>What is an Array?</h2>
+<p>
+An array is a <strong>collection of values</strong> stored under a single name.
+</p>
+<p>
+Instead of creating multiple variables for similar data,
+arrays allow us to store everything together in an ordered way.
+</p>
+</div>
+
+<div class="read-section">
+<h2>Think of it like this</h2>
+<div class="story-box">
+Imagine a row of lockers.<br><br>
+Each locker has a number.<br>
+Each locker stores one item.<br><br>
+An array works the same way — one name, many slots.
+</div>
+</div>
+
+<div class="read-section">
+<h2>Array Structure</h2>
+
+<svg width="100%" viewBox="0 0 600 180"
+     style="max-width:680px;margin:2.8rem auto;display:block;">
+  <g>
+    <rect x="40" y="60" width="80" height="60" class="array-cell"/>
+    <rect x="130" y="60" width="80" height="60" class="array-cell"/>
+    <rect x="220" y="60" width="80" height="60" class="array-cell"/>
+    <rect x="310" y="60" width="80" height="60" class="array-cell"/>
+    <rect x="400" y="60" width="80" height="60" class="array-cell"/>
+  </g>
+  <g text-anchor="middle" font-size="15">
+    <text x="80" y="95">10</text>
+    <text x="170" y="95">20</text>
+    <text x="260" y="95">30</text>
+    <text x="350" y="95">40</text>
+    <text x="440" y="95">50</text>
+  </g>
+  <g text-anchor="middle" font-size="13" fill="#6f6f6f">
+    <text x="80" y="140">index 0</text>
+    <text x="170" y="140">index 1</text>
+    <text x="260" y="140">index 2</text>
+    <text x="350" y="140">index 3</text>
+    <text x="440" y="140">index 4</text>
+  </g>
+</svg>
+</div>
+
+<div class="read-section">
+<h2>Basic Array Example</h2>
+<div class="code-block">
+int marks[5] = {10, 20, 30, 40, 50};
+</div>
+<div class="note-box">
+Each value is stored at a specific index starting from 0.
+</div>
+</div>
+
+<div class="read-section">
+<h2>A tiny moment to think</h2>
+<p>
+If <code>marks[0] = 10</code> and <code>marks[3] = 40</code>,
+what value is stored at index <code>3</code>?
+</p>
+
+<button class="reveal-btn" onclick="revealAnswer()">Reveal answer</button>
+
+<div class="answer-box" id="answerBox">
+<strong>Answer:</strong> The value is <strong>40</strong>.<br><br>
+Array indexing starts from 0, so index 3 refers to the fourth element.
+</div>
+</div>
+
+<div class="read-section">
+<h2>Quick recap</h2>
+<div class="recap-card">
+✔ Arrays store multiple values together<br>
+✔ Each element has an index<br>
+✔ Indexing starts from 0
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="cta">
+<a class="back" href="/topics">← Back</a>
+<a class="practice" href="/quiz/arrays/easy">Practice with quiz</a>
+</div>
+
+</div>
+
+<script>
+const notes=document.getElementById("notesContent");
+const canvas=document.getElementById("drawCanvas");
+const ctx=canvas.getContext("2d");
+
+/* Canvas */
+function resizeCanvas(){
+  canvas.width=notes.scrollWidth;
+  canvas.height=notes.scrollHeight;
+}
+window.addEventListener("load",resizeCanvas);
+window.addEventListener("resize",resizeCanvas);
+
+/* Draw / Erase */
+let mode="off", dragging=false;
+
+function togglePen(){
+  mode = mode==="draw" ? "off" : "draw";
+  canvas.className = mode==="draw" ? "pen" : "";
+  canvas.style.pointerEvents = mode==="draw" ? "auto" : "none";
+}
+function toggleEraser(){
+  mode = mode==="erase" ? "off" : "erase";
+  canvas.className = mode==="erase" ? "eraser" : "";
+  canvas.style.pointerEvents = mode==="erase" ? "auto" : "none";
+}
+
+canvas.onmousedown=e=>{
+  if(mode==="off") return;
+  dragging=true;
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX,e.offsetY);
+};
+canvas.onmousemove=e=>{
+  if(!dragging) return;
+  ctx.lineWidth = mode==="erase" ? 16 : 2;
+  ctx.strokeStyle = mode==="erase" ? "#ffffff" : "#d4a373";
+  ctx.lineTo(e.offsetX,e.offsetY);
+  ctx.stroke();
+};
+canvas.onmouseup=()=>dragging=false;
+
+function clearCanvas(){ctx.clearRect(0,0,canvas.width,canvas.height)}
+
+/* Edit */
+function enableEdit(){notes.contentEditable=true;notes.focus()}
+function saveNotes(){notes.contentEditable=false}
+
+/* Underline & Highlight */
+function wrapSelection(style){
+  const sel=window.getSelection();
+  if(!sel.rangeCount) return;
+  const range=sel.getRangeAt(0);
+  if(!notes.contains(range.commonAncestorContainer)) return;
+  const span=document.createElement("span");
+  Object.assign(span.style,style);
+  range.surroundContents(span);
+  sel.removeAllRanges();
+}
+function underline(){wrapSelection({textDecoration:"underline"})}
+function highlight(){wrapSelection({backgroundColor:"#fff3b0"})}
+
+/* Read – female voice, safe */
+let femaleVoice=null;
+function loadVoices(){
+  const v=speechSynthesis.getVoices();
+  femaleVoice =
+    v.find(x=>x.name==="Samantha") ||
+    v.find(x=>x.lang.startsWith("en"));
+}
+speechSynthesis.onvoiceschanged=loadVoices;
+loadVoices();
+
+function startReading(){
+  speechSynthesis.cancel();
+  if(!femaleVoice){
+    setTimeout(startReading,150);
+    return;
+  }
+  const u=new SpeechSynthesisUtterance(notes.innerText);
+  u.voice=femaleVoice;
+  u.rate=0.95;
+  u.pitch=1.3;
+  speechSynthesis.speak(u);
+}
+function pauseReading(){speechSynthesis.pause()}
+function resumeReading(){speechSynthesis.resume()}
+function stopReading(){speechSynthesis.cancel()}
+
+/* Reveal */
+function revealAnswer(){
+  document.getElementById("answerBox").style.display="block";
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ topic.title() }} • Levels</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/levels.css') }}">
+</head>
+
+<body class="levels-page">
+
+<div class="levels-container">
+
+    <h1 class="levels-title">{{ topic.replace('_', ' ').title() }}</h1>
+    <p class="levels-subtitle">Select difficulty level</p>
+
+    <div class="levels-grid">
+
+        <a href="/quiz/{{ topic }}/easy" class="level-card easy">
+            <span>Easy</span>
+        </a>
+
+        <a href="/quiz/{{ topic }}/medium" class="level-card medium">
+            <span>Medium</span>
+        </a>
+
+        <a href="/quiz/{{ topic }}/hard" class="level-card hard">
+            <span>Hard</span>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
